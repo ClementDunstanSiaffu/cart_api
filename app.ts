@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8000;
 const Routes = require("./routes")
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:false}));
 
 Routes.getCartsRoutes(app);
 

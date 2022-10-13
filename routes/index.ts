@@ -7,16 +7,21 @@ import {AppType} from '../types/types'
 class Routes{
 
     getCartsRoutes(app:AppType){
-        app.post("/postCartContents",(req:Request,res:Response)=>{
-            const date = Date.now();
-            const cartDbInstance = new CartDbInstance({id:date,...req.body});
-            cartDbInstance.save((err,docs)=>{
-                if(!err){
-                    res.status(200).json({"status":true})
-                }else{
-                    res.status(200).json({"status":false})
-                }
-            })
+        app.post("/postCartContents",async(req:Request,res:Response)=>{
+            const availableCart = await CartDbInstance.findOne({id:req.body.where.id});
+            if (!availableCart){
+                const cartDbInstance = new CartDbInstance(req.body.where);
+                cartDbInstance.save((err,docs)=>{
+                    if(!err){
+                        res.status(200).json({"status":true})
+                    }else{
+                        res.status(200).json({"status":false})
+                    }
+                })
+            }else{
+                res.status(200).json({"status":"Already saved"});
+            }
+         
         }),
         app.post("/getCartContents",(req:Request,res:Response)=>{
             CartDbInstance.find((err,docs)=>{

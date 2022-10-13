@@ -18,7 +18,7 @@ class Routes{
                 }
             })
         }),
-        app.get("/getCartContents",(req:Request,res:Response)=>{
+        app.post("/getCartContents",(req:Request,res:Response)=>{
             CartDbInstance.find((err,docs)=>{
                 if (!err){
                     res.status(200).json(docs);

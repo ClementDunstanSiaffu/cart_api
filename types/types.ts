@@ -18,6 +18,12 @@ export type AppType = {
         arg1: (
             req: express.Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, 
             res: express.Response<any, Record<string, any>>) => void
+    ) => void,
+    delete: (
+        arg0: string, 
+        arg1: (
+            req: express.Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, 
+            res: express.Response<any, Record<string, any>>) => void
     ) => void
 }
 

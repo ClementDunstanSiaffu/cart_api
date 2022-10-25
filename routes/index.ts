@@ -7,6 +7,7 @@ import {AppType} from '../types/types'
 class Routes{
 
     getCartsRoutes(app:AppType){
+
         app.post("/postCartContents",async(req:Request,res:Response)=>{
             const availableCart = await CartDbInstance.findOne({id:req.body.where.id});
             if (!availableCart){
@@ -23,6 +24,7 @@ class Routes{
             }
          
         }),
+
         app.post("/getCartContents",(req:Request,res:Response)=>{
             CartDbInstance.find((err,docs)=>{
                 if (!err){
@@ -31,6 +33,16 @@ class Routes{
                     res.status(400).json({"status":false})
                 }
             })
+        })
+
+        app.delete("/deleteCart",async(req:Request,res:Response)=>{
+            try{
+                await CartDbInstance.findOneAndDelete({id:req.body.where.id});
+                res.status(200).json({"status":true});
+            }
+            catch(err){
+                res.status(400).json({"status":false})
+            }
         })
     }
 }
